@@ -1,0 +1,325 @@
+================================================================================
+          TECHNOLOGY & TOOLS SUMMARY — ACROSS BOTH PROJECTS
+================================================================================
+
+This document covers every technology, framework, library, and tool used in:
+  1. Cricket Score-Card  (Backend + Angular Frontend)
+  2. Fitness Tracking & Suggestion  (Microservices + React Frontend)
+
+────────────────────────────────────────────────────────────────────────────────
+1. PROGRAMMING LANGUAGES
+────────────────────────────────────────────────────────────────────────────────
+
+• Java 21 (Score-Card)
+  – Used for the monolithic backend. Java 21 introduces virtual threads,
+    pattern matching for switch, and record patterns which help write
+    cleaner, more performant server-side code.
+
+• Java 25 (Fitness Microservices)
+  – Used across all backend microservices. Java 25 is a cutting-edge
+    release with the latest language improvements and performance
+    enhancements for modern cloud-native applications.
+
+• TypeScript 5.1 (Score-Card UI)
+  – Strongly typed superset of JavaScript used with Angular. Provides
+    compile-time type checking, interfaces, and decorators that make
+    large frontend codebases more maintainable and less error-prone.
+
+• JavaScript / JSX (Fitness Frontend)
+  – Used with React for building the fitness tracking user interface.
+    JSX allows writing HTML-like syntax directly inside JavaScript,
+    making component rendering intuitive and declarative.
+
+────────────────────────────────────────────────────────────────────────────────
+2. BACKEND FRAMEWORKS
+────────────────────────────────────────────────────────────────────────────────
+
+• Spring Boot 3.5.3 (Score-Card)
+  – Provides auto-configuration, embedded server (Tomcat), and
+    opinionated defaults for rapidly building production-ready Java
+    applications. Handles dependency injection, REST endpoint creation,
+    database connectivity, and security out of the box.
+
+• Spring Boot 4.0.1 (Fitness Microservices)
+  – The latest major version used across all fitness microservices.
+    Builds on Spring Boot 3.x with further Jakarta EE alignment,
+    improved native compilation support, and modernized starters
+    (e.g., spring-boot-starter-webmvc, spring-boot-starter-kafka).
+
+• Spring Cloud 2025.1.0 (Fitness Microservices)
+  – A suite of tools for building distributed systems. Provides
+    service discovery, centralized configuration, API gateway routing,
+    and inter-service communication patterns. Makes it practical to
+    run dozens of independent services that find and talk to each other.
+
+────────────────────────────────────────────────────────────────────────────────
+3. FRONTEND FRAMEWORKS & LIBRARIES
+────────────────────────────────────────────────────────────────────────────────
+
+• Angular 16 (Score-Card UI)
+  – A full-featured, component-based frontend framework by Google.
+    Provides routing, forms, HTTP client, dependency injection, and
+    a powerful CLI. Used here to build the cricket scorecard dashboard
+    with real-time match updates.
+
+• React 19 (Fitness Frontend)
+  – A lightweight, component-based UI library by Meta. Uses a virtual
+    DOM for efficient rendering. Built with Create React App (CRA) for
+    quick project scaffolding with Webpack, Babel, and ESLint pre-configured.
+
+• Bootstrap 5.3 (Score-Card UI)
+  – A popular CSS framework providing responsive grid layouts,
+    pre-styled UI components (buttons, cards, modals), and utility
+    classes. Used to rapidly build a polished, mobile-friendly interface
+    without writing CSS from scratch.
+
+• Chart.js 4.5 (Score-Card UI)
+  – A JavaScript charting library for rendering interactive charts
+    (bar, line, pie, radar, etc.) on an HTML canvas. Used here for
+    visualizing cricket statistics like player performance, run rates,
+    and match summaries.
+
+• RxJS 7.8 (Score-Card UI)
+  – Reactive Extensions for JavaScript. Provides Observables and
+    operators for composing asynchronous, event-based programs.
+    Central to Angular's HTTP client and used for managing real-time
+    WebSocket data streams in the scorecard app.
+
+• @stomp/rx-stomp (Score-Card UI)
+  – A reactive STOMP (Simple Text Oriented Messaging Protocol) client
+    for JavaScript. Works on top of WebSocket connections to provide
+    message framing and pub/sub semantics. Used to receive live ball-by-ball
+    match updates from the Spring WebSocket backend.
+
+────────────────────────────────────────────────────────────────────────────────
+4. MICROSERVICES INFRASTRUCTURE (Fitness Project)
+────────────────────────────────────────────────────────────────────────────────
+
+• Netflix Eureka (Service Discovery)
+  – A service registry where each microservice registers itself on
+    startup. Other services query Eureka to discover available instances,
+    enabling dynamic load balancing and failover without hardcoded URLs.
+
+• Spring Cloud Gateway (API Gateway)
+  – A reactive, non-blocking API gateway built on WebFlux. Acts as the
+    single entry point for all client requests, routing them to the
+    correct microservice. Also handles cross-cutting concerns like
+    authentication, rate limiting, and CORS.
+
+• Spring Cloud Config Server (Centralized Configuration)
+  – Externalizes application configuration into a central server.
+    All microservices fetch their properties (database URLs, secrets,
+    feature flags) from this server on startup, making it easy to
+    manage configuration across environments (dev, staging, prod)
+    without redeploying services.
+
+────────────────────────────────────────────────────────────────────────────────
+5. DATABASES
+────────────────────────────────────────────────────────────────────────────────
+
+• PostgreSQL (Score-Card & Fitness User Service)
+  – An advanced open-source relational database. Supports complex
+    queries, ACID transactions, JSON columns, and full-text search.
+    Used for storing structured data like match records, player stats,
+    user profiles, and authentication data.
+
+• MongoDB (Fitness Activity Service & AI Service)
+  – A NoSQL document database that stores data as flexible JSON-like
+    (BSON) documents. Ideal for data with varying schemas such as
+    workout activities, AI-generated fitness suggestions, and
+    recommendation histories. Scales horizontally for high write loads.
+
+────────────────────────────────────────────────────────────────────────────────
+6. MESSAGING & REAL-TIME COMMUNICATION
+────────────────────────────────────────────────────────────────────────────────
+
+• Apache Kafka (Fitness Activity & AI Services)
+  – A distributed event streaming platform for building real-time data
+    pipelines. In this project, when a user logs a workout activity,
+    an event is published to a Kafka topic. The AI service consumes
+    that event to generate personalized fitness recommendations
+    asynchronously, decoupling the two services.
+
+• Spring WebSocket + STOMP (Score-Card)
+  – Provides full-duplex, persistent connections between the server and
+    browser clients. Combined with the STOMP messaging protocol, it
+    enables the backend to push live cricket score updates (ball events,
+    wickets, run totals) to all connected frontend clients in real time
+    without polling.
+
+────────────────────────────────────────────────────────────────────────────────
+7. SECURITY & AUTHENTICATION
+────────────────────────────────────────────────────────────────────────────────
+
+• Spring Security (Score-Card)
+  – A powerful, customizable authentication and access-control framework.
+    Secures REST endpoints, manages user sessions, handles password
+    encoding, and enforces role-based authorization to protect the
+    cricket scorecard APIs.
+
+• OAuth2 Client + Google Login (Score-Card)
+  – Integrates Google as an OAuth2 identity provider, allowing users to
+    sign in with their Google accounts. The app redirects to Google's
+    consent screen, receives an authorization code, exchanges it for
+    tokens, and retrieves user profile/email information.
+
+• JWT (JSON Web Tokens) — jjwt 0.12.6 (Score-Card)
+  – A compact, self-contained token format for securely transmitting
+    user identity between parties. After login, the server issues a
+    signed JWT containing user claims. The frontend includes this token
+    in every subsequent API request, allowing the server to verify
+    identity without maintaining server-side sessions.
+
+• OAuth2 Resource Server (Fitness Gateway)
+  – Configures the API Gateway to validate incoming JWT/OAuth2 access
+    tokens. Every request passing through the gateway is authenticated
+    by verifying the token signature and claims before routing to
+    downstream microservices, providing a centralized security layer.
+
+────────────────────────────────────────────────────────────────────────────────
+8. ORM & DATA ACCESS
+────────────────────────────────────────────────────────────────────────────────
+
+• Spring Data JPA (Score-Card & Fitness User Service)
+  – Simplifies database access by providing repository abstractions
+    over JPA/Hibernate. Developers define interfaces with method names
+    like findByEmail() and Spring auto-generates the SQL queries.
+    Supports pagination, sorting, custom queries, and entity lifecycle
+    management.
+
+• Spring Data MongoDB (Fitness Activity & AI Services)
+  – The MongoDB equivalent of Spring Data JPA. Provides MongoRepository
+    and MongoTemplate for performing CRUD operations, aggregation
+    pipelines, and index management on MongoDB collections using
+    familiar Spring patterns.
+
+• Hibernate (Implicit via Spring Data JPA)
+  – The default JPA implementation used under the hood. Handles
+    object-relational mapping (ORM), converting Java entity classes
+    to database tables, managing relationships (@OneToMany, @ManyToOne),
+    lazy loading, and schema generation (ddl-auto=update).
+
+────────────────────────────────────────────────────────────────────────────────
+9. LOGGING
+────────────────────────────────────────────────────────────────────────────────
+
+• Log4j2 (Score-Card)
+  – A high-performance logging framework replacing the default Logback.
+    Configured with both console and rolling file appenders. Logs are
+    written to files with daily rotation and 10MB size limits, keeping
+    the last 7 archived log files. Supports asynchronous logging for
+    better throughput under heavy load.
+
+────────────────────────────────────────────────────────────────────────────────
+10. BUILD & DEVELOPMENT TOOLS
+────────────────────────────────────────────────────────────────────────────────
+
+• Apache Maven (All Java Projects)
+  – A build automation and dependency management tool. Uses pom.xml to
+    declare project dependencies, plugins, and build lifecycle. Handles
+    compiling, testing, packaging (JAR), and running Spring Boot apps
+    via the spring-boot-maven-plugin.
+
+• Maven Compiler Plugin (Score-Card & Fitness Services)
+  – Configures the Java compiler version and annotation processor paths
+    (e.g., Lombok). Ensures code compiles with the correct Java version
+    and that Lombok's compile-time code generation works properly.
+
+• npm (Fitness Frontend)
+  – Node Package Manager for installing, managing, and running
+    JavaScript project dependencies. Uses package.json for dependency
+    declaration and package-lock.json for reproducible builds.
+
+• Angular CLI (Score-Card UI)
+  – Command-line tool for creating, building, testing, and serving
+    Angular projects. Provides commands like ng serve, ng build, and
+    ng generate for rapid development workflows.
+
+• Spring Boot DevTools (Score-Card)
+  – Provides automatic restart, live reload, and development-time
+    property defaults. When code changes, the app restarts instantly
+    without a full rebuild, significantly speeding up the development
+    feedback loop.
+
+────────────────────────────────────────────────────────────────────────────────
+11. UTILITY LIBRARIES
+────────────────────────────────────────────────────────────────────────────────
+
+• Lombok (All Java Projects)
+  – A compile-time annotation processor that generates boilerplate code
+    like getters, setters, constructors, equals(), hashCode(), toString(),
+    and builder patterns. Reduces verbosity in entity and DTO classes
+    by using annotations like @Data, @Builder, @AllArgsConstructor.
+
+• Bean Validation (Fitness User Service)
+  – spring-boot-starter-validation integrates Hibernate Validator for
+    declarative input validation using annotations like @NotNull,
+    @Email, @Size, @Min. Applied to request DTOs so that invalid data
+    is rejected before reaching the service layer.
+
+• WebFlux / WebClient (Fitness Services)
+  – Spring's reactive, non-blocking web framework built on Project
+    Reactor. WebClient is the reactive HTTP client used for inter-service
+    communication within the microservice architecture, replacing the
+    deprecated RestTemplate with a non-blocking, streaming-capable
+    alternative.
+
+• Project Reactor (Fitness Gateway)
+  – The reactive programming foundation used by Spring WebFlux and
+    Spring Cloud Gateway. Provides Mono (0-1 element) and Flux (0-N
+    elements) types for building non-blocking, backpressure-aware
+    data pipelines in the API gateway.
+
+────────────────────────────────────────────────────────────────────────────────
+12. TESTING FRAMEWORKS
+────────────────────────────────────────────────────────────────────────────────
+
+• JUnit 5 (via spring-boot-starter-test) (All Java Projects)
+  – The standard Java testing framework. Provides annotations like
+    @Test, @BeforeEach, @ExtendWith for writing and organizing unit
+    and integration tests. Included automatically with Spring Boot's
+    test starter.
+
+• Spring Security Test (Score-Card)
+  – Utilities for testing secured endpoints. Provides annotations like
+    @WithMockUser and helper methods for simulating authenticated
+    requests in unit and integration tests.
+
+• Reactor Test (Fitness Gateway)
+  – Testing utilities for Project Reactor streams. Provides StepVerifier
+    for asserting the behavior of reactive Mono/Flux pipelines in the
+    gateway's routing and filtering logic.
+
+• Jasmine + Karma (Score-Card UI)
+  – Jasmine is a behavior-driven testing framework for JavaScript/
+    TypeScript. Karma is a test runner that executes tests in real
+    browsers (Chrome). Together, they provide the unit testing
+    infrastructure for Angular components and services.
+
+• React Testing Library + Jest (Fitness Frontend)
+  – @testing-library/react provides utilities for testing React
+    components in a way that simulates real user interactions. Works
+    with Jest (bundled in CRA) as the test runner and assertion library.
+
+────────────────────────────────────────────────────────────────────────────────
+13. PWA (PROGRESSIVE WEB APP)
+────────────────────────────────────────────────────────────────────────────────
+
+• Angular Service Worker (Score-Card UI)
+  – @angular/service-worker and ngsw-config.json enable the Score-Card
+    UI to work as a Progressive Web App. Service workers cache static
+    assets and API responses for offline support, and allow the app
+    to be installed on mobile home screens like a native app.
+
+────────────────────────────────────────────────────────────────────────────────
+14. VERSION CONTROL
+────────────────────────────────────────────────────────────────────────────────
+
+• Git
+  – Distributed version control system used across both projects for
+    tracking code changes, branching, merging, and collaborating.
+    Both projects include .gitignore and .gitattributes configurations.
+
+================================================================================
+                              END OF SUMMARY
+================================================================================
